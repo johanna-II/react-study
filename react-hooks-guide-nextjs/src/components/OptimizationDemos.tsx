@@ -96,7 +96,7 @@ export function OptimizationDemos() {
         
         <div className="bg-slate-950/50 p-4 rounded-lg border border-white/10 mb-4">
           <p className="text-sm text-slate-400 mb-2">Console 메시지:</p>
-          <p className="text-xs text-green-400 font-mono">"Expensive calculation running..."</p>
+          <p className="text-xs text-green-400 font-mono">&quot;Expensive calculation running...&quot;</p>
         </div>
         
         <aside className="p-4 bg-slate-900/50 rounded-lg border border-white/10">
@@ -118,8 +118,8 @@ export function OptimizationDemos() {
           <div className="bg-green-950/30 p-4 rounded-lg border border-green-500/20">
             <p className="text-sm font-semibold text-green-400 mb-2">✅ Good Examples</p>
             <ul className="text-xs text-slate-300 space-y-1">
-              <li>• key="user-123"</li>
-              <li>• key="post-456"</li>
+              <li>• key=&quot;user-123&quot;</li>
+              <li>• key=&quot;post-456&quot;</li>
               <li>• key=&#123;item.id&#125;</li>
               <li>• key=&#123;`type-id`&#125;</li>
             </ul>

@@ -136,7 +136,7 @@ export function AdvancedPatterns() {
         
         <div className="bg-slate-950/50 p-4 rounded-lg border border-white/10 mb-4">
           <p className="text-sm text-slate-400 mb-2">Console 메시지 (5초마다):</p>
-          <p className="text-xs text-green-400 font-mono">"Count is: {count}"</p>
+          <p className="text-xs text-green-400 font-mono">&quot;Count is: {count}&quot;</p>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
