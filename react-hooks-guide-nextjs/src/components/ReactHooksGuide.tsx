@@ -268,8 +268,8 @@ const ReactHooksGuide: React.FC = React.memo(() => {
                 </p>
                 <div className="bg-slate-900/50 p-4 rounded-xl">
                   <p className="text-sm text-green-400 mb-3">🎉 React 19의 새로운 방식:</p>
-                  <code className="text-sm text-slate-400 font-mono block">
-                    {`// Before React 19
+                  <pre className="text-sm text-slate-400 font-mono overflow-x-auto bg-slate-800/50 p-4 rounded-lg border border-slate-600/50">
+                    <code className="language-typescript">{`// Before React 19
 const [isPending, setIsPending] = useState(false);
 const [error, setError] = useState(null);
 
@@ -294,8 +294,8 @@ const handleSubmit = () => {
     if (error) return error;
     redirect("/path");
   });
-};`}
-                  </code>
+};`}</code>
+                  </pre>
                 </div>
               </div>
 
@@ -329,8 +329,8 @@ const handleSubmit = () => {
                   조건문 안에서도 사용 가능한 유일한 Hook입니다.
                 </p>
                 <div className="bg-slate-900/50 p-4 rounded-xl">
-                  <code className="text-sm text-slate-400 font-mono block">
-                    {`// Promise를 직접 사용
+                  <pre className="text-sm text-slate-400 font-mono overflow-x-auto bg-slate-800/50 p-4 rounded-lg border border-slate-600/50">
+                    <code className="language-typescript">{`// Promise를 직접 사용
 const data = use(fetchPromise);
 
 // 조건부 사용 가능!
@@ -338,8 +338,8 @@ if (condition) {
   const context = use(MyContext);
 }
 
-// React 19에서는 더 안전하고 예측 가능한 방식으로 작동`}
-                  </code>
+// React 19에서는 더 안전하고 예측 가능한 방식으로 작동`}</code>
+                  </pre>
                 </div>
               </div>
 
@@ -347,7 +347,7 @@ if (condition) {
                 <div className="flex items-center mb-6">
                   <span className="text-4xl mr-4">🔧</span>
                   <div>
-                    <h4 className="text-2xl font-bold text-white">useFormStatus & useOptimistic</h4>
+                    <h4 className="text-xl font-bold text-white">useFormStatus & useOptimistic</h4>
                     <p className="text-slate-400">폼 상태 관리의 새로운 패러다임</p>
                   </div>
                 </div>
@@ -357,8 +357,8 @@ if (condition) {
                 </p>
                 <div className="bg-slate-900/50 p-4 rounded-xl">
                   <p className="text-sm text-green-400 mb-3">🎉 새로운 Form Hooks:</p>
-                  <code className="text-sm text-slate-400 font-mono block">
-                    {`// useFormStatus로 폼 상태 관리
+                  <pre className="text-sm text-slate-400 font-mono overflow-x-auto bg-slate-800/50 p-4 rounded-lg border border-slate-600/50">
+                    <code className="language-typescript">{`// useFormStatus로 폼 상태 관리
 function SubmitButton() {
   const { pending } = useFormStatus();
   
@@ -373,8 +373,8 @@ function SubmitButton() {
 const [optimisticMessages, addOptimisticMessage] = useOptimistic(
   messages,
   (state, newMessage) => [...state, { ...newMessage, sending: true }]
-);`}
-                  </code>
+);`}</code>
+                  </pre>
                 </div>
               </div>
 
@@ -393,17 +393,17 @@ const [optimisticMessages, addOptimisticMessage] = useOptimistic(
                 </p>
                 <div className="bg-slate-900/50 p-4 rounded-xl">
                   <p className="text-sm text-green-400 mb-3">🎉 더 이상 필요없어진 코드:</p>
-                  <code className="text-sm text-slate-400 font-mono block">
-                    {`// Before React 19
+                  <pre className="text-sm text-slate-400 font-mono overflow-x-auto bg-slate-800/50 p-4 rounded-lg border border-slate-600/50">
+                    <code className="language-typescript">{`// Before React 19
 const memoized = useMemo(() => expensive(), [deps]);
 const callback = useCallback(() => handler(), [deps]);
 const MemoizedComponent = React.memo(Component);
 
-// React 19 - Automatic!
-const result = expensive(); // 자동으로 최적화됨
-const handler = () => {}; // 자동으로 메모이제이션됨
-const Component = () => {}; // 자동으로 메모이제이션됨`}
-                  </code>
+// React 19 - 자동으로 최적화됨!
+const memoized = expensive(); // 자동으로 useMemo 적용
+const callback = () => handler(); // 자동으로 useCallback 적용
+const Component = () => <div>...</div>; // 자동으로 React.memo 적용`}</code>
+                  </pre>
                 </div>
               </div>
 

@@ -151,8 +151,8 @@ export default function FormActionDemo() {
         <h4 className="text-xl font-bold text-white mb-4">💻 React 19 Form Actions 코드</h4>
         <div className="bg-slate-900/50 p-4 rounded-xl border border-slate-600/50">
           <p className="text-sm text-green-400 mb-3">🎉 실제 React 19에서는 이렇게 사용합니다:</p>
-          <pre className="text-sm text-slate-300 font-mono overflow-x-auto">
-            <code>{`// React 19 Form Actions
+          <pre className="text-sm text-slate-300 font-mono overflow-x-auto bg-slate-800/50 p-4 rounded-lg border border-slate-600/50">
+            <code className="language-typescript">{`// React 19 Form Actions
 const [error, submitAction, isPending] = useActionState(
   async (previousState, formData) => {
     const name = formData.get("name");

@@ -14,7 +14,7 @@ export default function AdvancedPatterns() {
           <h5 className="text-lg font-semibold text-blue-400 mb-3">🎯 동작 원리</h5>
           <div className="grid sm:grid-cols-2 gap-4 text-sm">
             <div>
-              <p className="text-slate-300 mb-2"><strong>useCallback 없이:</strong></p>
+              <p className="text-slate-300 mb-2"><strong>useCallback 없이: </strong></p>
               <ul className="text-slate-400 space-y-1 text-xs">
                 <li>• 매번 새로운 함수 생성</li>
                 <li>• 자식 컴포넌트 불필요한 리렌더링</li>
@@ -22,7 +22,7 @@ export default function AdvancedPatterns() {
               </ul>
             </div>
             <div>
-              <p className="text-slate-300 mb-2"><strong>useCallback 사용:</strong></p>
+              <p className="text-slate-300 mb-2"><strong>useCallback 사용: </strong></p>
               <ul className="text-slate-400 space-y-1 text-xs">
                 <li>• 동일한 함수 참조 유지</li>
                 <li>• 자식 컴포넌트 리렌더링 방지</li>
@@ -44,7 +44,7 @@ export default function AdvancedPatterns() {
           <h5 className="text-lg font-semibold text-green-400 mb-3">🎯 동작 원리</h5>
           <div className="grid sm:grid-cols-2 gap-4 text-sm">
             <div>
-              <p className="text-slate-300 mb-2"><strong>일반 변수:</strong></p>
+              <p className="text-slate-300 mb-2"><strong>일반 변수: </strong></p>
               <ul className="text-slate-400 space-y-1 text-xs">
                 <li>• 리렌더링시 초기화됨</li>
                 <li>• DOM 요소 접근 불가</li>
@@ -52,7 +52,7 @@ export default function AdvancedPatterns() {
               </ul>
             </div>
             <div>
-              <p className="text-slate-300 mb-2"><strong>useRef 사용:</strong></p>
+              <p className="text-slate-300 mb-2"><strong>useRef 사용: </strong></p>
               <ul className="text-slate-400 space-y-1 text-xs">
                 <li>• 리렌더링시에도 값 유지</li>
                 <li>• DOM 요소 직접 접근</li>
@@ -74,7 +74,7 @@ export default function AdvancedPatterns() {
           <h5 className="text-lg font-semibold text-purple-400 mb-3">🎯 동작 원리</h5>
           <div className="grid sm:grid-cols-2 gap-4 text-sm">
             <div>
-              <p className="text-slate-300 mb-2"><strong>Cleanup 없이:</strong></p>
+              <p className="text-slate-300 mb-2"><strong>Cleanup 없이: </strong></p>
               <ul className="text-slate-400 space-y-1 text-xs">
                 <li>• 이벤트 리스너 누적</li>
                 <li>• 메모리 누수 발생</li>
@@ -82,7 +82,7 @@ export default function AdvancedPatterns() {
               </ul>
             </div>
             <div>
-              <p className="text-slate-300 mb-2"><strong>Cleanup 사용:</strong></p>
+              <p className="text-slate-300 mb-2"><strong>Cleanup 사용: </strong></p>
               <ul className="text-slate-400 space-y-1 text-xs">
                 <li>• 리소스 정리</li>
                 <li>• 메모리 효율적 관리</li>

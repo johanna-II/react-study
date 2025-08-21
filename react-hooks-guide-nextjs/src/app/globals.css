@@ -24,3 +24,69 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* 코드 하이라이팅 스타일 */
+pre {
+  background: #1e293b;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  overflow-x: auto;
+  border: 1px solid #475569;
+}
+
+pre code {
+  font-family: 'Fira Code', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', monospace;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+/* TypeScript/JavaScript 코드 하이라이팅 */
+.language-typescript,
+.language-jsx,
+.language-javascript {
+  color: #e2e8f0;
+}
+
+.language-typescript .keyword,
+.language-jsx .keyword,
+.language-javascript .keyword {
+  color: #93c5fd;
+}
+
+.language-typescript .string,
+.language-jsx .string,
+.language-javascript .string {
+  color: #86efac;
+}
+
+.language-typescript .number,
+.language-jsx .number,
+.language-javascript .number {
+  color: #fbbf24;
+}
+
+.language-typescript .comment,
+.language-jsx .comment,
+.language-javascript .comment {
+  color: #64748b;
+  font-style: italic;
+}
+
+.language-typescript .function,
+.language-jsx .function,
+.language-javascript .function {
+  color: #a78bfa;
+}
+
+.language-typescript .operator,
+.language-jsx .operator,
+.language-javascript .operator {
+  color: #f1f5f9;
+}
+
+/* 코드 블록 호버 효과 */
+pre:hover {
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 1px #60a5fa20;
+  transition: all 0.2s ease-in-out;
+}

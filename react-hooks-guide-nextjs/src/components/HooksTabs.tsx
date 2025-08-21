@@ -110,8 +110,8 @@ export default function HooksTabs() {
         {/* Code Example */}
         <div className="bg-slate-900/50 p-4 rounded-xl border border-slate-600/50 mb-6">
           <h4 className="text-lg font-semibold text-blue-400 mb-3">💻 코드 예시</h4>
-          <pre className="text-sm text-slate-300 font-mono overflow-x-auto">
-            <code>{currentExample.code}</code>
+          <pre className="text-sm text-slate-300 font-mono overflow-x-auto bg-slate-800/50 p-4 rounded-lg border border-slate-600/50">
+            <code className="language-typescript">{currentExample.code}</code>
           </pre>
         </div>
 

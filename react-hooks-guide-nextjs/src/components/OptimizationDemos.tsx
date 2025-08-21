@@ -673,19 +673,19 @@ export default function OptimizationDemos() {
           <h5 className="text-lg font-semibold text-yellow-400 mb-3">🧪 단계별 테스트 가이드</h5>
           <div className="space-y-2 text-sm">
             <div className="flex items-center space-x-2">
-              <span className="text-blue-400 font-bold">1단계:</span>
+              <span className="text-blue-400 font-bold">1단계: </span>
               <span className="text-slate-300">Count 버튼을 여러 번 클릭해보세요</span>
             </div>
             <div className="flex items-center space-x-2">
-              <span className="text-blue-400 font-bold">2단계:</span>
+              <span className="text-blue-400 font-bold">2단계: </span>
               <span className="text-slate-300">Render Count가 변하지 않는 것을 확인하세요</span>
             </div>
             <div className="flex items-center space-x-2">
-              <span className="text-blue-400 font-bold">3단계:</span>
+              <span className="text-blue-400 font-bold">3단계: </span>
               <span className="text-slate-300">Expensive 버튼을 클릭해보세요</span>
             </div>
             <div className="flex items-center space-x-2">
-              <span className="text-blue-400 font-bold">4단계:</span>
+              <span className="text-blue-400 font-bold">4단계: </span>
               <span className="text-slate-300">Render Count가 증가하는 것을 확인하세요</span>
             </div>
           </div>
@@ -694,7 +694,7 @@ export default function OptimizationDemos() {
         {/* 핵심 설명 */}
         <div className="p-4 bg-slate-800/50 rounded-lg border border-slate-600/50">
           <p className="text-sm text-slate-300 leading-relaxed">
-            <strong className="text-blue-400">💡 React.memo의 마법:</strong> 
+            <strong className="text-blue-400">💡 React.memo의 마법: </strong> 
             <span className="text-green-400">Count 버튼</span>을 클릭하면 부모 컴포넌트만 리렌더링되고, 
             <span className="text-orange-400">Expensive 버튼</span>을 클릭하면 부모와 자식 컴포넌트 모두 리렌더링됩니다. 
             React.memo는 props가 변경되지 않으면 이전 렌더링 결과를 재사용하여 
@@ -730,21 +730,21 @@ export default function OptimizationDemos() {
           <div className="bg-slate-800/50 p-4 rounded-lg border border-slate-600/50">
             <h5 className="text-lg font-semibold text-emerald-400 mb-2">✅ 좋은 예시</h5>
             <p className="text-sm text-slate-300 mb-2">고유 ID를 key로 사용:</p>
-            <code className="text-xs text-emerald-400 font-mono block bg-slate-900/50 p-2 rounded border border-slate-600/50">
-              {`{items.map(item => (
+            <pre className="text-xs text-emerald-400 font-mono bg-slate-900/50 p-3 rounded border border-slate-600/50 overflow-x-auto">
+              <code className="language-jsx">{`{items.map(item => (
   <ListItem key={item.id} data={item} />
-))}`}
-            </code>
+))}`}</code>
+            </pre>
           </div>
           
           <div className="bg-slate-800/50 p-4 rounded-lg border border-slate-600/50">
             <h5 className="text-lg font-semibold text-red-400 mb-2">❌ 나쁜 예시</h5>
             <p className="text-sm text-slate-300 mb-2">배열 인덱스를 key로 사용:</p>
-            <code className="text-xs text-red-400 font-mono block bg-slate-900/50 p-2 rounded border border-slate-600/50">
-              {`{items.map((item, index) => (
+            <pre className="text-xs text-red-400 font-mono bg-slate-900/50 p-3 rounded border border-slate-600/50 overflow-x-auto">
+              <code className="language-jsx">{`{items.map((item, index) => (
   <ListItem key={index} data={item} />
-))}`}
-            </code>
+))}`}</code>
+            </pre>
           </div>
         </div>
         
