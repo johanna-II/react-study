@@ -253,100 +253,239 @@ export default function ReactHooksGuide() {
           <OptimizationDemos />
         </section>
 
-        {/* React 19 Features */}
+        {/* React 19 Features Section */}
         <section id="react19" className="mb-20 scroll-mt-20">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-4">
-              🚀 React 19의 새로운 기능들
-            </h2>
-            <p className="text-lg text-slate-400 max-w-2xl mx-auto">
-              React Compiler, use() Hook, Form Actions 등 혁신적인 기능들
+          <div className="backdrop-blur-xl bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-2xl border border-blue-500/20 p-6">
+            <h3 className="text-xl font-bold text-white mb-4 flex items-center">
+              <span className="text-3xl mr-3">✨</span>
+              React 19의 혁신적인 새로운 Hook들
+            </h3>
+            <p className="text-slate-300 leading-relaxed mb-6">
+              React 19에서는 개발자 경험을 크게 향상시키는 새로운 Hook들과 기능들이 추가되었습니다.
+              특히 <strong className="text-blue-400">Actions</strong>, <strong className="text-green-400">Form Actions</strong>, 
+              <strong className="text-purple-400">use() Hook</strong> 등이 핵심입니다.
             </p>
-          </div>
-          
-          <div className="space-y-6">
-            <div className="backdrop-blur-xl bg-slate-900/50 border border-slate-700/50 rounded-2xl p-6">
-              <div className="flex items-center mb-4">
-                <span className="text-3xl mr-3">🤖</span>
-                <div>
-                  <h3 className="text-xl font-bold text-white">React Compiler</h3>
-                  <p className="text-sm text-slate-400">자동 최적화의 마법</p>
+            
+            <div className="space-y-6">
+              <div className="backdrop-blur-xl bg-slate-900/50 border border-slate-700/50 rounded-2xl p-6">
+                <div className="flex items-center mb-4">
+                  <span className="text-3xl mr-3">🚀</span>
+                  <div>
+                    <h3 className="text-xl font-bold text-white">Actions & useTransition</h3>
+                    <p className="text-sm text-slate-400">비동기 상태 관리의 혁신</p>
+                  </div>
+                </div>
+                <p className="text-slate-300 mb-4">
+                  React 19의 <strong className="text-blue-400">Actions</strong>는 async 함수를 transitions에서 사용할 수 있게 해줍니다.
+                  pending 상태, 에러 처리, 낙관적 업데이트를 자동으로 관리합니다.
+                </p>
+                <div className="bg-slate-800/50 p-4 rounded-lg">
+                  <p className="text-xs text-green-400 mb-2">🎉 React 19의 새로운 방식:</p>
+                  <code className="text-xs text-slate-400 font-mono block">
+                    {`// Before React 19
+const [isPending, setIsPending] = useState(false);
+const [error, setError] = useState(null);
+
+const handleSubmit = async () => {
+  setIsPending(true);
+  try {
+    await updateName(name);
+    redirect("/path");
+  } catch (err) {
+    setError(err);
+  } finally {
+    setIsPending(false);
+  }
+};
+
+// React 19 - Actions!
+const [isPending, startTransition] = useTransition();
+
+const handleSubmit = () => {
+  startTransition(async () => {
+    const error = await updateName(name);
+    if (error) return error;
+    redirect("/path");
+  });
+};`}
+                  </code>
                 </div>
               </div>
-              <p className="text-slate-300 mb-4">
-                React 19의 새로운 컴파일러는 useMemo, useCallback, React.memo를 자동으로 적용합니다. 
-                개발자가 수동으로 최적화하지 않아도 React가 알아서 처리합니다.
-              </p>
-              <div className="bg-slate-800/50 p-4 rounded-lg">
-                <p className="text-xs text-green-400 mb-2">🎉 더 이상 필요없어진 코드:</p>
-                <code className="text-xs text-slate-400 font-mono block">
-                  {`// Before React 19
-const memoized = useMemo(() => expensive(), [deps]);
 
-// React 19 - Automatic!
-const result = expensive(); // 자동으로 최적화됨`}
-                </code>
-              </div>
-            </div>
+              <div className="backdrop-blur-xl bg-slate-900/50 border border-slate-700/50 rounded-2xl p-6">
+                <div className="flex items-center mb-4">
+                  <span className="text-3xl mr-3">📝</span>
+                  <div>
+                    <h3 className="text-xl font-bold text-white">Form Actions & useActionState</h3>
+                    <p className="text-sm text-slate-400">폼 처리가 놀랍도록 간단해짐</p>
+                  </div>
+                </div>
+                <p className="text-slate-300 mb-4">
+                  <strong className="text-green-400">useActionState</strong>와 <strong className="text-blue-400">Form Actions</strong>로 
+                  폼 처리가 훨씬 간단해졌습니다. 자동 폼 리셋, 에러 처리, pending 상태를 자동으로 관리합니다.
+                </p>
+                <div className="bg-slate-800/50 p-4 rounded-lg">
+                  <p className="text-xs text-green-400 mb-2">🎉 React 19의 Form Actions:</p>
+                  <code className="text-xs text-slate-400 font-mono block">
+                    {`// React 19 - Form Actions
+const [error, submitAction, isPending] = useActionState(
+  async (previousState, formData) => {
+    const error = await updateName(formData.get("name"));
+    if (error) return error;
+    redirect("/path");
+    return null;
+  },
+  null,
+);
 
-            <div className="backdrop-blur-xl bg-slate-900/50 border border-slate-700/50 rounded-2xl p-6">
-              <div className="flex items-center mb-4">
-                <span className="text-3xl mr-3">🎣</span>
-                <div>
-                  <h3 className="text-xl font-bold text-white">use() Hook</h3>
-                  <p className="text-sm text-slate-400">Promise와 Context를 더 쉽게</p>
+return (
+  <form action={submitAction}>
+    <input type="text" name="name" />
+    <button type="submit" disabled={isPending}>
+      Update
+    </button>
+    {error && <p>{error}</p>}
+  </form>
+);`}
+                  </code>
                 </div>
               </div>
-              <p className="text-slate-300 mb-4">
-                새로운 use() Hook으로 Promise를 직접 읽을 수 있습니다. 
-                조건문 안에서도 사용 가능한 유일한 Hook입니다.
-              </p>
-              <div className="bg-slate-800/50 p-4 rounded-lg">
-                <code className="text-xs text-slate-400 font-mono block">
-                  {`// Promise를 직접 사용
+
+              <div className="backdrop-blur-xl bg-slate-900/50 border border-slate-700/50 rounded-2xl p-6">
+                <div className="flex items-center mb-4">
+                  <span className="text-3xl mr-3">🎣</span>
+                  <div>
+                    <h3 className="text-xl font-bold text-white">use() Hook</h3>
+                    <p className="text-sm text-slate-400">Promise와 Context를 더 쉽게</p>
+                  </div>
+                </div>
+                <p className="text-slate-300 mb-4">
+                  새로운 <strong className="text-purple-400">use() Hook</strong>으로 Promise를 직접 읽을 수 있습니다. 
+                  조건문 안에서도 사용 가능한 유일한 Hook입니다.
+                </p>
+                <div className="bg-slate-800/50 p-4 rounded-lg">
+                  <code className="text-xs text-slate-400 font-mono block">
+                    {`// Promise를 직접 사용
 const data = use(fetchPromise);
 
 // 조건부 사용 가능!
 if (condition) {
   const context = use(MyContext);
-}`}
-                </code>
-              </div>
-            </div>
+}
 
-            <div className="backdrop-blur-xl bg-slate-900/50 border border-slate-700/50 rounded-2xl p-6">
-              <div className="flex items-center mb-4">
-                <span className="text-3xl mr-3">📝</span>
-                <div>
-                  <h3 className="text-xl font-bold text-white">Form Actions</h3>
-                  <p className="text-sm text-slate-400">폼 처리가 놀랍도록 간단해짐</p>
+// React 19에서는 더 안전하고 예측 가능한 방식으로 작동`}
+                  </code>
                 </div>
               </div>
-              <p className="text-slate-300 mb-4">
-                useFormStatus, useFormState, useOptimistic 등 새로운 Hook들로 
-                폼 처리가 훨씬 간단해졌습니다. 로딩, 에러, 낙관적 업데이트를 쉽게 구현할 수 있습니다.
-              </p>
-              <FormActionDemo />
-            </div>
 
-            <div className="backdrop-blur-xl bg-slate-900/50 border border-slate-700/50 rounded-2xl p-6">
-              <div className="flex items-center mb-4">
-                <span className="text-3xl mr-3">🚀</span>
-                <div>
-                  <h3 className="text-xl font-bold text-white">Server Components</h3>
-                  <p className="text-sm text-slate-400">서버에서 렌더링하는 새로운 패러다임</p>
+              <div className="backdrop-blur-xl bg-slate-900/50 border border-slate-700/50 rounded-2xl p-6">
+                <div className="flex items-center mb-4">
+                  <span className="text-3xl mr-3">🔧</span>
+                  <div>
+                    <h3 className="text-xl font-bold text-white">useFormStatus & useOptimistic</h3>
+                    <p className="text-sm text-slate-400">폼 상태 관리의 새로운 패러다임</p>
+                  </div>
                 </div>
-              </div>
-              <p className="text-slate-300">
-                컴포넌트를 서버에서 실행하여 번들 크기를 줄이고 초기 로딩을 빠르게 합니다. 
-                데이터베이스 직접 접근, 파일 시스템 읽기 등이 가능합니다.
-              </p>
-              <div className="mt-4 p-3 bg-blue-950/30 rounded-lg border border-blue-500/20">
-                <p className="text-xs text-blue-300">
-                  💡 서버 컴포넌트는 &apos;use server&apos; 지시문으로 표시되며, 
-                  클라이언트에 JavaScript를 전송하지 않습니다.
+                <p className="text-slate-300 mb-4">
+                  <strong className="text-orange-400">useFormStatus</strong>로 폼의 pending 상태를 쉽게 관리하고,
+                  <strong className="text-pink-400">useOptimistic</strong>으로 즉시 UI 업데이트를 구현할 수 있습니다.
                 </p>
+                <div className="bg-slate-800/50 p-4 rounded-lg">
+                  <p className="text-xs text-green-400 mb-2">🎉 새로운 Form Hooks:</p>
+                  <code className="text-xs text-slate-400 font-mono block">
+                    {`// useFormStatus로 폼 상태 관리
+function SubmitButton() {
+  const { pending } = useFormStatus();
+  
+  return (
+    <button type="submit" disabled={pending}>
+      {pending ? "Submitting..." : "Submit"}
+    </button>
+  );
+}
+
+// useOptimistic으로 즉시 UI 업데이트
+const [optimisticMessages, addOptimisticMessage] = useOptimistic(
+  messages,
+  (state, newMessage) => [...state, { ...newMessage, sending: true }]
+);`}
+                  </code>
+                </div>
               </div>
+
+              <div className="backdrop-blur-xl bg-slate-900/50 border border-slate-700/50 rounded-2xl p-6">
+                <div className="flex items-center mb-4">
+                  <span className="text-3xl mr-3">🚀</span>
+                  <div>
+                    <h3 className="text-xl font-bold text-white">Server Components & React Compiler</h3>
+                    <p className="text-sm text-slate-400">자동 최적화의 마법</p>
+                  </div>
+                </div>
+                <p className="text-slate-300 mb-4">
+                  React 19의 새로운 컴파일러는 <strong className="text-green-400">useMemo</strong>, 
+                  <strong className="text-blue-400">useCallback</strong>, <strong className="text-purple-400">React.memo</strong>를 
+                  자동으로 적용합니다. 개발자가 수동으로 최적화하지 않아도 React가 알아서 처리합니다.
+                </p>
+                <div className="bg-slate-800/50 p-4 rounded-lg">
+                  <p className="text-xs text-green-400 mb-2">🎉 더 이상 필요없어진 코드:</p>
+                  <code className="text-xs text-slate-400 font-mono block">
+                    {`// Before React 19
+const memoized = useMemo(() => expensive(), [deps]);
+const callback = useCallback(() => handler(), [deps]);
+const MemoizedComponent = React.memo(Component);
+
+// React 19 - Automatic!
+const result = expensive(); // 자동으로 최적화됨
+const handler = () => {}; // 자동으로 메모이제이션됨
+const Component = () => {}; // 자동으로 메모이제이션됨`}
+                  </code>
+                </div>
+              </div>
+
+              <div className="backdrop-blur-xl bg-slate-900/50 border border-slate-700/50 rounded-2xl p-6">
+                <div className="flex items-center mb-4">
+                  <span className="text-3xl mr-3">💎</span>
+                  <div>
+                    <h3 className="text-xl font-bold text-white">Resource Preloading APIs</h3>
+                    <p className="text-sm text-slate-400">성능 최적화의 새로운 차원</p>
+                  </div>
+                </div>
+                <p className="text-slate-300 mb-4">
+                  <strong className="text-yellow-400">prefetchDNS</strong>, <strong className="text-green-400">preconnect</strong>, 
+                  <strong className="text-blue-400">preload</strong>, <strong className="text-purple-400">preinit</strong> 등 
+                  새로운 리소스 프리로딩 API들로 페이지 성능을 크게 향상시킬 수 있습니다.
+                </p>
+                <div className="bg-slate-800/50 p-4 rounded-lg">
+                  <p className="text-xs text-green-400 mb-2">🎉 새로운 Resource APIs:</p>
+                  <code className="text-xs text-slate-400 font-mono block">
+                    {`import { prefetchDNS, preconnect, preload, preinit } from 'react-dom'
+
+function MyComponent() {
+  preinit('https://.../script.js', {as: 'script'}) // 즉시 로드 및 실행
+  preload('https://.../font.woff', { as: 'font' }) // 폰트 프리로드
+  preload('https://.../style.css', { as: 'style' }) // 스타일시트 프리로드
+  prefetchDNS('https://...') // DNS 프리페치
+  preconnect('https://...') // 연결 프리페치
+  
+  return <div>...</div>
+}`}
+                  </code>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-6 p-4 bg-blue-950/30 rounded-lg border border-blue-500/20">
+              <h4 className="text-lg font-semibold text-blue-400 mb-3">🚀 React 19 업그레이드 가이드</h4>
+              <div className="space-y-2 text-sm text-slate-300">
+                <p><strong>1단계:</strong> React 19.1.0으로 업그레이드</p>
+                <p><strong>2단계:</strong> 새로운 Actions 패턴 적용</p>
+                <p><strong>3단계:</strong> Form Actions로 폼 처리 현대화</p>
+                <p><strong>4단계:</strong> React Compiler의 자동 최적화 활용</p>
+                <p><strong>5단계:</strong> Resource Preloading APIs로 성능 향상</p>
+              </div>
+              <p className="text-xs text-blue-300 mt-3">
+                💡 React 19는 이전 버전과의 호환성을 유지하면서 점진적으로 새로운 기능을 도입할 수 있습니다.
+              </p>
             </div>
           </div>
         </section>
