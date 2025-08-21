@@ -81,7 +81,7 @@ export function AdvancedPatterns() {
         
         <aside className="p-4 bg-slate-900/50 rounded-lg border border-white/10">
           <p className="text-xs text-slate-400 leading-relaxed">
-            <strong>💡 초보자 팁:</strong> useCallback은 "함수를 기억하는 Hook"입니다.
+            <strong>💡 초보자 팁:</strong> useCallback은 &quot;함수를 기억하는 Hook&quot;입니다.
             자식 컴포넌트가 React.memo로 최적화되어 있다면 특히 유용합니다.
             의존성 배열이 비어있으면 컴포넌트가 마운트될 때만 함수가 생성됩니다.
           </p>
@@ -121,7 +121,7 @@ export function AdvancedPatterns() {
         
         <aside className="p-4 bg-slate-900/50 rounded-lg border border-white/10">
           <p className="text-xs text-slate-400 leading-relaxed">
-            <strong>💡 초보자 팁:</strong> useRef는 "DOM 요소를 가리키는 참조"입니다.
+            <strong>💡 초보자 팁:</strong> useRef는 &quot;DOM 요소를 가리키는 참조&quot;입니다.
             포커스, 스크롤 위치, 애니메이션 등 React로 제어하기 어려운 DOM 조작에 유용합니다.
             ref.current를 통해 실제 DOM 요소에 접근할 수 있습니다.
           </p>
@@ -152,7 +152,7 @@ export function AdvancedPatterns() {
         
         <aside className="p-4 bg-slate-900/50 rounded-lg border border-white/10">
           <p className="text-xs text-slate-400 leading-relaxed">
-            <strong>💡 초보자 팁:</strong> useEffect는 "부수 효과를 관리하는 Hook"입니다.
+            <strong>💡 초보자 팁:</strong> useEffect는 &quot;부수 효과를 관리하는 Hook&quot;입니다.
             컴포넌트가 마운트, 업데이트, 언마운트될 때 실행할 작업을 정의합니다.
             cleanup 함수를 반환하여 메모리 누수를 방지할 수 있습니다.
           </p>
@@ -187,7 +187,7 @@ export function AdvancedPatterns() {
         
         <aside className="p-4 bg-slate-900/50 rounded-lg border border-white/10">
           <p className="text-xs text-slate-400 leading-relaxed">
-            <strong>💡 초보자 팁:</strong> 성능 최적화는 "필요한 곳에만 적용"하는 것이 중요합니다.
+            <strong>💡 초보자 팁:</strong> 성능 최적화는 &quot;필요한 곳에만 적용&quot;하는 것이 중요합니다.
             모든 컴포넌트에 React.memo를 적용하는 것보다는, 실제로 성능 문제가 있는 부분을
             프로파일링 도구로 찾아서 최적화하는 것이 효과적입니다.
           </p>

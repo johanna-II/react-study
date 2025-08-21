@@ -47,10 +47,10 @@ export interface HooksTabsProps {
 }
 
 // Form Action Demo Props 타입
-export interface FormActionDemoProps {}
+export type FormActionDemoProps = Record<never, never>;
 
 // Optimization Demos Props 타입
-export interface OptimizationDemosProps {}
+export type OptimizationDemosProps = Record<never, never>;
 
 // Advanced Patterns Props 타입
-export interface AdvancedPatternsProps {}
+export type AdvancedPatternsProps = Record<never, never>;

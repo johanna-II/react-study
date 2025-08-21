@@ -81,7 +81,7 @@ export function OptimizationDemos() {
         
         <aside className="p-4 bg-slate-900/50 rounded-lg border border-white/10">
           <p className="text-xs text-slate-400 leading-relaxed">
-            <strong>💡 초보자 팁:</strong> React.memo는 "기억하는 컴포넌트"입니다.
+            <strong>💡 초보자 팁:</strong> React.memo는 &quot;기억하는 컴포넌트&quot;입니다.
             props가 변경되지 않으면 이전에 렌더링된 결과를 재사용하여 불필요한 계산을 방지합니다.
             마치 캐시처럼 작동하여 성능을 크게 향상시킵니다.
           </p>
@@ -101,7 +101,7 @@ export function OptimizationDemos() {
         
         <aside className="p-4 bg-slate-900/50 rounded-lg border border-white/10">
           <p className="text-xs text-slate-400 leading-relaxed">
-            <strong>💡 초보자 팁:</strong> useMemo는 "계산 결과를 기억하는 Hook"입니다.
+            <strong>💡 초보자 팁:</strong> useMemo는 &quot;계산 결과를 기억하는 Hook&quot;입니다.
             복잡한 계산이나 API 호출 결과를 캐시하여 동일한 입력에 대해 재계산하지 않습니다.
             특히 배열이나 객체를 반환하는 계산에서 유용합니다.
           </p>
@@ -137,7 +137,7 @@ export function OptimizationDemos() {
         
         <aside className="p-4 bg-slate-900/50 rounded-lg border border-white/10">
           <p className="text-xs text-slate-400 leading-relaxed">
-            <strong>💡 초보자 팁:</strong> Key는 React의 "식별자"입니다.
+            <strong>💡 초보자 팁:</strong> Key는 React의 &quot;식별자&quot;입니다.
             배열의 순서가 바뀌거나 요소가 추가/제거될 때 React가 어떤 요소가 변경되었는지
             정확히 파악할 수 있도록 도와줍니다. 고유하고 안정적인 값을 사용해야 합니다.
           </p>
@@ -164,7 +164,7 @@ const handleClick = useCallback(() => {
         
         <aside className="p-4 bg-slate-900/50 rounded-lg border border-white/10">
           <p className="text-xs text-slate-400 leading-relaxed">
-            <strong>💡 초보자 팁:</strong> useCallback은 "함수를 기억하는 Hook"입니다.
+            <strong>💡 초보자 팁:</strong> useCallback은 &quot;함수를 기억하는 Hook&quot;입니다.
             의존성 배열이 변경되지 않으면 동일한 함수 참조를 반환합니다.
             자식 컴포넌트가 React.memo로 최적화되어 있다면 특히 유용합니다.
           </p>

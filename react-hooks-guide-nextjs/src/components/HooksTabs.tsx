@@ -61,7 +61,7 @@ const [user, setUser] = useState({ name: '', age: 0 });`,
           </button>
           <div className="mt-4 p-3 bg-slate-900/50 rounded-lg">
             <p className="text-xs text-slate-400">
-              <strong>초보자 팁:</strong> useState는 "기억하는 변수"입니다. 
+              <strong>초보자 팁:</strong> useState는 &quot;기억하는 변수&quot;입니다. 
               일반 변수는 화면이 다시 그려질 때 초기화되지만, state는 값을 기억합니다.
             </p>
           </div>
@@ -100,7 +100,7 @@ useEffect(() => {}); // Run after every render`,
           />
           <div className="mt-4 p-3 bg-slate-900/50 rounded-lg">
             <p className="text-xs text-slate-400">
-              <strong>초보자 팁:</strong> useEffect는 "부수 효과"를 관리합니다.
+              <strong>초보자 팁:</strong> useEffect는 &quot;부수 효과&quot;를 관리합니다.
               화면 렌더링 외에 추가로 해야 할 작업(API 호출, 타이머 설정 등)을 여기서 처리합니다.
             </p>
           </div>
@@ -152,7 +152,7 @@ const SettingsContext = createContext({
           </div>
           <div className="mt-4 p-3 bg-slate-900/50 rounded-lg">
             <p className="text-xs text-slate-400">
-              <strong>초보자 팁:</strong> Context는 "전역 변수"처럼 어디서든 접근 가능한 데이터입니다.
+              <strong>초보자 팁:</strong> Context는 &quot;전역 변수&quot;처럼 어디서든 접근 가능한 데이터입니다.
               테마, 언어 설정, 로그인 정보 등을 공유할 때 유용합니다.
             </p>
           </div>
