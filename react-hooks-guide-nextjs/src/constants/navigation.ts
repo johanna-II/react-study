@@ -1,6 +1,7 @@
 import { NavigationSection } from '@/types';
 
 export const NAVIGATION_SECTIONS: NavigationSection[] = [
+  { id: 'hero', label: 'Home', icon: '🏠' },
   { id: 'why-hooks', label: 'Why Hooks?', icon: '🎯' },
   { id: 'core-hooks', label: 'Core Hooks', icon: '⚡' },
   { id: 'rules', label: 'Rules', icon: '📋' },
