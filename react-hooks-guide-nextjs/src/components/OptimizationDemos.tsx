@@ -20,7 +20,7 @@ function DemoBox({ title, children, className = '' }: DemoBoxProps) {
   );
 }
 
-export function OptimizationDemos() {
+export default function OptimizationDemos() {
   const [count, setCount] = useState(0);
   const [expensiveValue, setExpensiveValue] = useState(1);
   const [renderCount, setRenderCount] = useState(0);

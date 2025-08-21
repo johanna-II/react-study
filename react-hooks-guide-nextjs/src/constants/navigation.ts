@@ -38,5 +38,19 @@ export const WHY_HOOKS_DATA = [
     desc: 'Custom Hook으로 상태 관련 로직을 쉽게 재사용하고 공유할 수 있습니다.',
     detail: '레고 블록처럼 필요한 기능을 조립하고, 다른 프로젝트에서도 똑같이 사용할 수 있습니다.',
     gradient: 'from-purple-500 to-pink-500'
+  },
+  { 
+    title: 'TypeScript 친화적', 
+    icon: '🔒',
+    desc: '타입 추론과 제네릭을 활용하여 타입 안전한 코드를 작성할 수 있습니다.',
+    detail: '런타임 에러를 컴파일 타임에 미리 잡아내어 더욱 안정적인 애플리케이션을 구축할 수 있습니다.',
+    gradient: 'from-indigo-500 to-blue-500'
+  },
+  { 
+    title: '성능 최적화', 
+    icon: '⚡',
+    desc: 'React.memo, useMemo, useCallback으로 불필요한 리렌더링을 방지합니다.',
+    detail: '메모이제이션을 통해 계산 결과를 재사용하여 사용자 경험을 크게 향상시킵니다.',
+    gradient: 'from-yellow-500 to-orange-500'
   }
 ];

@@ -1,263 +1,337 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
-import { HooksTabsProps } from '@/types';
+import React, { useState, useEffect } from 'react';
 
-export function HooksTabs({ activeTab, setActiveTab }: HooksTabsProps) {
-  const [count, setCount] = useState(0);
-  const [inputValue, setInputValue] = useState('');
-  const [theme, setTheme] = useState('light');
-  const [reducerCount, setReducerCount] = useState(0);
-  const originalTitle = useRef<string>('');
+interface HookExample {
+  title: string;
+  description: string;
+  code: string;
+  demo?: React.ReactNode;
+}
+
+const HOOK_EXAMPLES: Record<string, HookExample> = {
+  useState: {
+    title: 'useState',
+    description: '컴포넌트에 상태를 추가하는 Hook입니다.',
+    code: `const [count, setCount] = useState(0);
+
+return (
+  <div>
+    <p>Count: {count}</p>
+    <button onClick={() => setCount(count + 1)}>
+      Increment
+    </button>
+  </div>
+);`,
+    demo: <UseStateDemo />
+  },
+  useEffect: {
+    title: 'useEffect',
+    description: '컴포넌트의 생명주기와 관련된 작업을 처리하는 Hook입니다.',
+    code: `useEffect(() => {
+  document.title = \`Count: \${count}\`;
+  
+  return () => {
+    // Cleanup function
+    document.title = 'React App';
+  };
+}, [count]);`,
+    demo: <UseEffectDemo />
+  },
+  useRef: {
+    title: 'useRef',
+    description: 'DOM 요소에 직접 접근하거나 값을 저장하는 Hook입니다.',
+    code: `const inputRef = useRef<HTMLInputElement>(null);
+
+const focusInput = () => {
+  inputRef.current?.focus();
+};
+
+return (
+  <div>
+    <input ref={inputRef} type="text" />
+    <button onClick={focusInput}>Focus Input</button>
+  </div>
+);`,
+    demo: <UseRefDemo />
+  },
+  useCallback: {
+    title: 'useCallback',
+    description: '함수를 메모이제이션하여 불필요한 리렌더링을 방지합니다.',
+    code: `const memoizedCallback = useCallback(
+  (increment) => {
+    setCount(c => c + increment);
+  },
+  [] // 의존성 배열
+);`,
+    demo: <UseCallbackDemo />
+  },
+  useMemo: {
+    title: 'useMemo',
+    description: '계산 결과를 메모이제이션하여 성능을 최적화합니다.',
+    code: `const expensiveValue = useMemo(() => {
+  return computeExpensiveValue(a, b);
+}, [a, b]);`,
+    demo: <UseMemoDemo />
+  }
+};
+
+export default function HooksTabs() {
+  const [activeTab, setActiveTab] = useState('useState');
+  const [originalTitle, setOriginalTitle] = useState('');
 
   useEffect(() => {
-    // 클라이언트 사이드에서만 document에 접근
     if (typeof window !== 'undefined') {
-      originalTitle.current = document.title;
+      setOriginalTitle(document.title);
     }
   }, []);
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const title = originalTitle.current;
-      if (activeTab === 'useEffect' && inputValue) {
-        document.title = `Input: ${inputValue}`;
-      }
-      return () => {
-        if (activeTab === 'useEffect') {
-          document.title = title;
-        }
-      };
-    }
-  }, [inputValue, activeTab]);
-
-  const hooksData = {
-    useState: {
-      title: 'useState',
-      emoji: '📦',
-      desc: 'State management의 기본 Hook. Component 내에서 dynamic data를 관리합니다.',
-      detail: '일반 변수와 달리 값이 변경되면 화면이 자동으로 업데이트됩니다. 마치 Excel의 셀처럼 값이 바뀌면 연관된 부분이 자동으로 재계산됩니다.',
-      code: `const [count, setCount] = useState(0);
-
-// Direct update
-setCount(count + 1);
-
-// Functional update (safer)
-setCount(prevCount => prevCount + 1);
-
-// Object state
-const [user, setUser] = useState({ name: '', age: 0 });`,
-      demo: (
-        <div className="bg-gradient-to-br from-blue-500/10 to-purple-500/10 backdrop-blur border border-white/10 rounded-xl p-6 mt-6 text-center">
-          <p className="text-sm text-slate-400 mb-2">버튼을 클릭하면 숫자가 증가합니다</p>
-          <div className="text-6xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-            {count}
-          </div>
-          <button
-            onClick={() => setCount(count + 1)}
-            className="px-6 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-xl hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300 hover:scale-105"
-          >
-            Increment
-          </button>
-          <div className="mt-4 p-3 bg-slate-900/50 rounded-lg">
-            <p className="text-xs text-slate-400">
-              <strong>초보자 팁:</strong> useState는 &quot;기억하는 변수&quot;입니다. 
-              일반 변수는 화면이 다시 그려질 때 초기화되지만, state는 값을 기억합니다.
-            </p>
-          </div>
-        </div>
-      )
-    },
-    useEffect: {
-      title: 'useEffect',
-      emoji: '⚡',
-      desc: 'Side effect를 처리하는 Hook. Network request, DOM manipulation, subscription 등을 처리합니다.',
-      detail: '컴포넌트가 화면에 나타날 때, 업데이트될 때, 사라질 때 실행할 작업을 정의합니다. 마치 이벤트 알림을 설정하는 것과 같습니다.',
-      code: `useEffect(() => {
-  // Runs after render
-  console.log('Component rendered!');
-  
-  // Cleanup function
-  return () => {
-    console.log('Cleaning up!');
-  };
-}, [dependency]); // Re-run when dependency changes
-
-// Common patterns:
-useEffect(() => {}, []); // Run once on mount
-useEffect(() => {}); // Run after every render`,
-      demo: (
-        <div className="bg-gradient-to-br from-green-500/10 to-emerald-500/10 backdrop-blur border border-white/10 rounded-xl p-6 mt-6">
-          <label className="block text-sm font-medium text-slate-300 mb-2">
-            Type below to change page title:
-          </label>
-          <input
-            type="text"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            className="w-full px-4 py-2 bg-white/5 backdrop-blur border border-white/10 rounded-xl text-white placeholder-slate-400 focus:border-green-400/50 focus:outline-none focus:ring-2 focus:ring-green-400/20 transition-all"
-            placeholder="Type here..."
-          />
-          <div className="mt-4 p-3 bg-slate-900/50 rounded-lg">
-            <p className="text-xs text-slate-400">
-              <strong>초보자 팁:</strong> useEffect는 &quot;부수 효과&quot;를 관리합니다.
-              화면 렌더링 외에 추가로 해야 할 작업(API 호출, 타이머 설정 등)을 여기서 처리합니다.
-            </p>
-          </div>
-        </div>
-      )
-    },
-    useContext: {
-      title: 'useContext',
-      emoji: '🌐',
-      desc: 'Prop drilling 해결. Component tree 전체에서 global data를 직접 공유합니다.',
-      detail: '부모에서 자식으로 props를 계속 전달하는 대신, Context를 통해 직접 데이터에 접근할 수 있습니다. 마치 와이파이처럼 무선으로 데이터를 전달합니다.',
-      code: `const ThemeContext = createContext('light');
-
-// Provide data
-<ThemeContext.Provider value={theme}>
-  <App />
-</ThemeContext.Provider>
-
-// Consume data anywhere in the tree
-const theme = useContext(ThemeContext);
-
-// With default value
-const SettingsContext = createContext({
-  language: 'en',
-  theme: 'dark'
-});`,
-      demo: (
-        <div className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 backdrop-blur border border-white/10 rounded-xl p-6 mt-6">
-          <p className="text-center mb-4 text-sm text-slate-300">Switch theme</p>
-          <div className={`p-6 rounded-xl text-center font-bold text-lg transition-all duration-500 ${theme === 'dark'
-              ? 'bg-slate-900 text-white shadow-xl shadow-purple-500/20'
-              : 'bg-white/90 text-slate-900 shadow-xl shadow-blue-500/20'
-            }`}>
-            {theme === 'dark' ? '🌙 Dark Mode' : '☀️ Light Mode'}
-          </div>
-          <div className="flex justify-center gap-3 mt-4">
-            <button
-              onClick={() => setTheme('light')}
-              className="px-4 py-2 bg-white/10 backdrop-blur border border-white/20 text-white rounded-lg hover:bg-white/20 transition-all"
-            >
-              Light
-            </button>
-            <button
-              onClick={() => setTheme('dark')}
-              className="px-4 py-2 bg-purple-500/20 backdrop-blur border border-purple-500/30 text-purple-300 rounded-lg hover:bg-purple-500/30 transition-all"
-            >
-              Dark
-            </button>
-          </div>
-          <div className="mt-4 p-3 bg-slate-900/50 rounded-lg">
-            <p className="text-xs text-slate-400">
-              <strong>초보자 팁:</strong> Context는 &quot;전역 변수&quot;처럼 어디서든 접근 가능한 데이터입니다.
-              테마, 언어 설정, 로그인 정보 등을 공유할 때 유용합니다.
-            </p>
-          </div>
-        </div>
-      )
-    },
-    useReducer: {
-      title: 'useReducer',
-      emoji: '🎛️',
-      desc: 'Complex state logic 관리. useState의 강력한 대안으로 Redux pattern을 component 내에서 구현합니다.',
-      detail: '여러 연관된 state를 하나로 관리하고, 복잡한 상태 변경 로직을 체계적으로 처리합니다. 은행 계좌처럼 입금, 출금 등 다양한 거래를 관리하는 것과 비슷합니다.',
-      code: `const initialState = { count: 0, history: [] };
-
-function reducer(state, action) {
-  switch (action.type) {
-    case 'increment':
-      return { 
-        count: state.count + 1,
-        history: [...state.history, '+1']
-      };
-    case 'decrement':
-      return { 
-        count: state.count - 1,
-        history: [...state.history, '-1']
-      };
-    case 'reset':
-      return initialState;
-    default:
-      throw new Error();
-  }
-}
-
-const [state, dispatch] = useReducer(reducer, initialState);`,
-      demo: (
-        <div className="bg-gradient-to-br from-orange-500/10 to-red-500/10 backdrop-blur border border-white/10 rounded-xl p-6 mt-6 text-center">
-          <p className="text-sm text-slate-400 mb-2">복잡한 상태 관리 예제</p>
-          <div className="text-5xl font-bold mb-4 bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent">
-            {reducerCount}
-          </div>
-          <div className="flex justify-center gap-3">
-            <button
-              onClick={() => setReducerCount(reducerCount - 1)}
-              className="w-12 h-12 bg-red-500/20 backdrop-blur border border-red-500/30 text-red-300 rounded-xl hover:bg-red-500/30 transition-all hover:scale-110"
-            >
-              −
-            </button>
-            <button
-              onClick={() => setReducerCount(0)}
-              className="px-4 py-2 bg-slate-500/20 backdrop-blur border border-slate-500/30 text-slate-300 rounded-xl hover:bg-slate-500/30 transition-all"
-            >
-              Reset
-            </button>
-            <button
-              onClick={() => setReducerCount(reducerCount + 1)}
-              className="w-12 h-12 bg-green-500/20 backdrop-blur border border-green-500/30 text-green-300 rounded-xl hover:bg-green-500/30 transition-all hover:scale-110"
-            >
-              +
-            </button>
-          </div>
-          <div className="mt-4 p-3 bg-slate-900/50 rounded-lg">
-            <p className="text-xs text-slate-400">
-              <strong>초보자 팁:</strong> useReducer는 useState보다 복잡하지만,
-              여러 상태가 서로 연관되어 있을 때 더 체계적으로 관리할 수 있습니다.
-            </p>
-          </div>
-        </div>
-      )
-    }
-  };
-
-  const currentHook = hooksData[activeTab as keyof typeof hooksData];
+  const currentExample = HOOK_EXAMPLES[activeTab];
 
   return (
-    <>
-      <div className="mb-8">
-        <div className="flex flex-wrap gap-2">
-          {Object.keys(hooksData).map(hook => (
-            <button
-              key={hook}
-              onClick={() => setActiveTab(hook)}
-              className={`px-4 py-2 rounded-xl font-medium transition-all duration-300 ${activeTab === hook
-                  ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg shadow-purple-500/25 scale-105'
-                  : 'bg-white/5 text-slate-400 hover:text-white hover:bg-white/10 border border-white/10'
-                }`}
-            >
-              <span className="mr-2">{hooksData[hook as keyof typeof hooksData].emoji}</span>
-              {hook}
-            </button>
-          ))}
+    <div className="space-y-6">
+      {/* Tab Navigation */}
+      <div className="flex flex-wrap gap-2 justify-center">
+        {Object.keys(HOOK_EXAMPLES).map((hookName) => (
+          <button
+            key={hookName}
+            onClick={() => setActiveTab(hookName)}
+            className={`px-4 py-2 rounded-xl font-medium transition-all duration-300 ${
+              activeTab === hookName
+                ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg shadow-blue-500/25'
+                : 'bg-slate-800/50 text-slate-300 hover:text-white hover:bg-slate-700/50 border border-slate-700/50'
+            }`}
+          >
+            {hookName}
+          </button>
+        ))}
+      </div>
+
+      {/* Content */}
+      <div className="bg-slate-800/50 rounded-2xl border border-slate-700/50 p-6">
+        <div className="mb-6">
+          <h3 className="text-2xl font-bold text-white mb-3">{currentExample.title}</h3>
+          <p className="text-slate-300 leading-relaxed">{currentExample.description}</p>
+        </div>
+
+        {/* Code Example */}
+        <div className="bg-slate-900/50 p-4 rounded-xl border border-slate-600/50 mb-6">
+          <h4 className="text-lg font-semibold text-blue-400 mb-3">💻 코드 예시</h4>
+          <pre className="text-sm text-slate-300 font-mono overflow-x-auto">
+            <code>{currentExample.code}</code>
+          </pre>
+        </div>
+
+        {/* Interactive Demo */}
+        {currentExample.demo && (
+          <div className="bg-slate-900/50 p-4 rounded-xl border border-slate-600/50">
+            <h4 className="text-lg font-semibold text-green-400 mb-3">🎮 실시간 데모</h4>
+            <div className="p-4 bg-slate-800/50 rounded-lg">
+              {currentExample.demo}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// Demo Components
+function UseStateDemo() {
+  const [count, setCount] = useState(0);
+  const [text, setText] = useState('');
+
+  return (
+    <div className="space-y-4">
+      <div className="text-center">
+        <p className="text-2xl font-bold text-white mb-2">Count: {count}</p>
+        <div className="flex gap-2 justify-center">
+          <button
+            onClick={() => setCount(count - 1)}
+            className="px-4 py-2 bg-red-500/20 text-red-300 rounded-lg hover:bg-red-500/30 border border-red-500/30"
+          >
+            -
+          </button>
+          <button
+            onClick={() => setCount(count + 1)}
+            className="px-4 py-2 bg-green-500/20 text-green-300 rounded-lg hover:bg-green-500/30 border border-green-500/30"
+          >
+            +
+          </button>
+          <button
+            onClick={() => setCount(0)}
+            className="px-4 py-2 bg-blue-500/20 text-blue-300 rounded-lg hover:bg-blue-500/30 border border-blue-500/30"
+          >
+            Reset
+          </button>
         </div>
       </div>
       <div>
-        <h3 className="text-2xl font-bold mb-2 flex items-center">
-          <span className="text-3xl mr-3">{currentHook.emoji}</span>
-          <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-            {currentHook.title}
-          </span>
-        </h3>
-        <p className="text-slate-300 mb-2">{currentHook.desc}</p>
-        <p className="text-sm text-slate-400 mb-6 italic">{currentHook.detail}</p>
-        <div className="bg-slate-950/50 backdrop-blur text-slate-300 p-4 rounded-xl font-mono text-sm border border-white/5">
-          <pre className="overflow-x-auto">{currentHook.code}</pre>
-        </div>
-        {currentHook.demo}
+        <input
+          type="text"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          placeholder="Type something..."
+          className="w-full px-3 py-2 bg-slate-700/50 border border-slate-600/50 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-blue-500/50"
+        />
+        <p className="text-sm text-slate-400 mt-2">Text: {text}</p>
       </div>
-    </>
+    </div>
+  );
+}
+
+function UseEffectDemo() {
+  const [count, setCount] = useState(0);
+  const [effectCount, setEffectCount] = useState(0);
+
+  useEffect(() => {
+    setEffectCount(prev => prev + 1);
+    document.title = `Count: ${count}`;
+    
+    return () => {
+      document.title = 'React Hooks Guide';
+    };
+  }, [count]);
+
+  return (
+    <div className="space-y-4">
+      <div className="text-center">
+        <p className="text-2xl font-bold text-white mb-2">Count: {count}</p>
+        <p className="text-sm text-slate-400 mb-3">Effect 실행 횟수: {effectCount}</p>
+        <button
+          onClick={() => setCount(count + 1)}
+          className="px-4 py-2 bg-purple-500/20 text-purple-300 rounded-lg hover:bg-purple-500/30 border border-purple-500/30"
+        >
+          Increment
+        </button>
+      </div>
+      <div className="text-xs text-slate-500 text-center">
+        💡 브라우저 탭 제목이 변경되는 것을 확인하세요!
+      </div>
+    </div>
+  );
+}
+
+function UseRefDemo() {
+  const inputRef = React.useRef<HTMLInputElement>(null);
+  const [focusCount, setFocusCount] = useState(0);
+
+  const focusInput = () => {
+    inputRef.current?.focus();
+    setFocusCount(prev => prev + 1);
+  };
+
+  return (
+    <div className="space-y-4">
+      <div>
+        <input
+          ref={inputRef}
+          type="text"
+          placeholder="Click button to focus me..."
+          className="w-full px-3 py-2 bg-slate-700/50 border border-slate-600/50 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-green-500/50"
+        />
+      </div>
+      <div className="text-center">
+        <button
+          onClick={focusInput}
+          className="px-4 py-2 bg-green-500/20 text-green-300 rounded-lg hover:bg-green-500/30 border border-green-500/30"
+        >
+          Focus Input
+        </button>
+        <p className="text-sm text-slate-400 mt-2">Focus 횟수: {focusCount}</p>
+      </div>
+    </div>
+  );
+}
+
+function UseCallbackDemo() {
+  const [count, setCount] = useState(0);
+  const [renderCount, setRenderCount] = useState(0);
+
+  const increment = React.useCallback(() => {
+    setCount(c => c + 1);
+  }, []);
+
+  const decrement = React.useCallback(() => {
+    setCount(c => c - 1);
+  }, []);
+
+  // 렌더링 횟수 추적
+  React.useEffect(() => {
+    setRenderCount(prev => prev + 1);
+  });
+
+  return (
+    <div className="space-y-4">
+      <div className="text-center">
+        <p className="text-2xl font-bold text-white mb-2">Count: {count}</p>
+        <p className="text-sm text-slate-400 mb-3">렌더링 횟수: {renderCount}</p>
+        <div className="flex gap-2 justify-center">
+          <button
+            onClick={decrement}
+            className="px-4 py-2 bg-red-500/20 text-red-300 rounded-lg hover:bg-red-500/30 border border-red-500/30"
+          >
+            -
+          </button>
+          <button
+            onClick={increment}
+            className="px-4 py-2 bg-green-500/20 text-green-300 rounded-lg hover:bg-green-500/30 border border-green-500/30"
+          >
+            +
+          </button>
+        </div>
+      </div>
+      <div className="text-xs text-slate-500 text-center">
+        💡 useCallback으로 함수가 메모이제이션되어 불필요한 리렌더링을 방지합니다!
+      </div>
+    </div>
+  );
+}
+
+function UseMemoDemo() {
+  const [a, setA] = useState(1);
+  const [b, setB] = useState(1);
+  const [computeCount, setComputeCount] = useState(0);
+
+  const expensiveValue = React.useMemo(() => {
+    setComputeCount(prev => prev + 1);
+    // 의도적으로 무거운 계산 시뮬레이션
+    let result = 0;
+    for (let i = 0; i < 1000000; i++) {
+      result += a + b;
+    }
+    return result;
+  }, [a, b]);
+
+  return (
+    <div className="space-y-4">
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <label className="block text-sm text-slate-400 mb-2">Value A</label>
+          <input
+            type="number"
+            value={a}
+            onChange={(e) => setA(Number(e.target.value))}
+            className="w-full px-3 py-2 bg-slate-700/50 border border-slate-600/50 rounded-lg text-white focus:outline-none focus:border-blue-500/50"
+          />
+        </div>
+        <div>
+          <label className="block text-sm text-slate-400 mb-2">Value B</label>
+          <input
+            type="number"
+            value={b}
+            onChange={(e) => setB(Number(e.target.value))}
+            className="w-full px-3 py-2 bg-slate-700/50 border border-slate-600/50 rounded-lg text-white focus:outline-none focus:border-blue-500/50"
+          />
+        </div>
+      </div>
+      <div className="text-center">
+        <p className="text-lg font-bold text-white mb-2">계산 결과: {expensiveValue.toLocaleString()}</p>
+        <p className="text-sm text-slate-400">계산 실행 횟수: {computeCount}</p>
+      </div>
+      <div className="text-xs text-slate-500 text-center">
+        💡 A나 B가 변경될 때만 계산이 실행됩니다!
+      </div>
+    </div>
   );
 }
