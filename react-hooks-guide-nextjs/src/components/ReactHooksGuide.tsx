@@ -107,7 +107,7 @@ export default function ReactHooksGuide() {
             </h3>
             <div className="space-y-4 text-slate-300">
               <p>
-                <strong className="text-blue-400">Hook이란?</strong> 프로그래밍에서 '갈고리'처럼 React의 기능을 '걸어서' 사용할 수 있게 해주는 특별한 함수입니다.
+                <strong className="text-blue-400">Hook이란?</strong> 프로그래밍에서 &apos;갈고리&apos;처럼 React의 기능을 &apos;걸어서&apos; 사용할 수 있게 해주는 특별한 함수입니다.
                 마치 레고 블록처럼 필요한 기능을 조립해서 웹 애플리케이션을 만들 수 있게 해줍니다.
               </p>
               <p>
