@@ -78,13 +78,6 @@ return (
 
 export default function HooksTabs() {
   const [activeTab, setActiveTab] = useState('useState');
-  const [originalTitle, setOriginalTitle] = useState('');
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setOriginalTitle(document.title);
-    }
-  }, []);
 
   const currentExample = HOOK_EXAMPLES[activeTab];
 
@@ -259,7 +252,7 @@ function UseCallbackDemo() {
   // 렌더링 횟수 추적
   React.useEffect(() => {
     setRenderCount(prev => prev + 1);
-  });
+  }, []);
 
   return (
     <div className="space-y-4">

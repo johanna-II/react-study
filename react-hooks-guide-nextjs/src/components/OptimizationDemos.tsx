@@ -31,7 +31,7 @@ export default function OptimizationDemos() {
   const [optRenders] = useState(1);
   const [nonOptTime, setNonOptTime] = useState(0);
   const [optTime, setOptTime] = useState(0);
-  const memoizedResult = useRef(null);
+  const memoizedResult = useRef<boolean | null>(null);
   const [nonOptInput, setNonOptInput] = useState('');
   const [optInput, setOptInput] = useState('');
   const [nonOptDots, setNonOptDots] = useState(Array(100).fill(false));
@@ -259,7 +259,7 @@ export default function OptimizationDemos() {
                 const t0 = performance.now();
                 heavyCalculation(1000000007);
                 const t1 = performance.now();
-                setNonOptTime((t1 - t0).toFixed(2));
+                setNonOptTime(Number((t1 - t0).toFixed(2)));
               }}
               className="w-full px-4 py-2 bg-red-500/20 text-red-300 rounded-lg hover:bg-red-500/30 transition-all border border-red-500/30"
             >
@@ -289,7 +289,7 @@ export default function OptimizationDemos() {
                   memoizedResult.current = heavyCalculation(1000000007);
                 }
                 const t1 = performance.now();
-                setOptTime((t1 - t0).toFixed(2));
+                setOptTime(Number((t1 - t0).toFixed(2)));
               }}
               className="w-full px-4 py-2 bg-green-500/20 text-green-300 rounded-lg hover:bg-green-500/30 transition-all border border-green-500/30"
             >
@@ -324,8 +324,8 @@ export default function OptimizationDemos() {
           </div>
           {nonOptTime > 0 && optTime > 0 && (
             <p className="text-xs text-slate-400 mt-3 text-center">
-              {parseFloat(nonOptTime) > parseFloat(optTime) ? 
-                `🎉 ${((parseFloat(nonOptTime) - parseFloat(optTime)) / parseFloat(nonOptTime) * 100).toFixed(1)}% 성능 향상!` : 
+              {nonOptTime > optTime ? 
+                `🎉 ${((nonOptTime - optTime) / nonOptTime * 100).toFixed(1)}% 성능 향상!` : 
                 '테스트해보세요!'
               }
             </p>

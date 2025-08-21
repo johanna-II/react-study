@@ -3,9 +3,6 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 
 export default function AdvancedPatterns() {
-  const [renderCount, setRenderCount] = useState(0);
-  const [timerCount, setTimerCount] = useState(0);
-
   return (
     <div className="space-y-8">
       {/* useCallback 최적화 */}
