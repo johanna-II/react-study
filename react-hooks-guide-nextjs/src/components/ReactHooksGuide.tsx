@@ -21,7 +21,6 @@ const ReactHooksGuide: React.FC = React.memo(() => {
     return window.innerWidth < 1024;
   });
   const [mobileActiveSection, setMobileActiveSection] = React.useState('hero');
-  const [selectedSection, setSelectedSection] = React.useState('hero');
   
   // 페이지 성능 측정
   React.useEffect(() => {
@@ -76,7 +75,8 @@ const ReactHooksGuide: React.FC = React.memo(() => {
     window.addEventListener('resize', checkMobile);
     
     return () => window.removeEventListener('resize', checkMobile);
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // isMobile 의도적으로 제외 - 리사이즈 이벤트 핸들러 내부에서 상태 확인
 
   // 모든 Hook 호출 후 early return 및 렌더링 로직
   if (!activeSection) {

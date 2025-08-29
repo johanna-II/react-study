@@ -18,11 +18,6 @@ interface MobileMainContentProps {
   onSectionChange?: (sectionId: string) => void;
 }
 
-interface SectionConfig {
-  id: string;
-  component: React.ComponentType;
-}
-
 const SECTIONS: string[] = ['hero', 'introduction', 'why-hooks', 'core-hooks', 'rules', 'optimization', 'react19', 'advanced'];
 
 const HeroSection: React.FC<{ onNavigate: (section: string) => void }> = React.memo(({ onNavigate }) => (
@@ -56,7 +51,7 @@ const IntroductionSection: React.FC = React.memo(() => (
     <h2 className="text-lg font-bold text-white text-center mb-4">
       초보자를 위한 React Hooks
     </h2>
-    
+
     <div className="space-y-4">
       {[
         { title: 'Hook이란?', desc: '함수형 컴포넌트에서 React의 상태와 생명주기 기능을 사용할 수 있게 해주는 함수입니다.', color: 'blue' },
@@ -79,7 +74,7 @@ const WhyHooksSection: React.FC = React.memo(() => (
     <h2 className="text-lg font-bold text-white text-center mb-4">
       Hooks가 필요한 이유
     </h2>
-    
+
     <div className="space-y-3">
       {WHY_HOOKS_DATA.map((item, index) => (
         <div key={index} className="bg-slate-800/50 p-3 rounded-xl border border-slate-700/50">
@@ -109,7 +104,7 @@ const RulesSection: React.FC = React.memo(() => (
     <h2 className="text-lg font-bold text-white text-center mb-4">
       Hooks 사용 규칙
     </h2>
-    
+
     <div className="space-y-4">
       <div className="bg-slate-800/50 p-3 rounded-xl border border-slate-700/50">
         <h3 className="text-sm font-bold text-red-400 mb-2">하지 말아야 할 것</h3>
@@ -119,7 +114,7 @@ const RulesSection: React.FC = React.memo(() => (
           <li>• 클래스 컴포넌트에서 Hook 사용</li>
         </ul>
       </div>
-      
+
       <div className="bg-slate-800/50 p-3 rounded-xl border border-slate-700/50">
         <h3 className="text-sm font-bold text-green-400 mb-2">올바른 사용법</h3>
         <ul className="space-y-1.5 text-slate-300 text-xs">
@@ -167,9 +162,9 @@ const AdvancedSection: React.FC = React.memo(() => (
 
 AdvancedSection.displayName = 'AdvancedSection';
 
-export const MobileMainContent: React.FC<MobileMainContentProps> = React.memo(({ 
+export const MobileMainContent: React.FC<MobileMainContentProps> = React.memo(({
   activeSection,
-  onSectionChange 
+  onSectionChange
 }) => {
   const [currentSection, setCurrentSection] = useState(activeSection);
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -232,16 +227,15 @@ export const MobileMainContent: React.FC<MobileMainContentProps> = React.memo(({
   };
 
   return (
-    <div 
+    <div
       ref={containerRef}
       className="min-h-screen w-full overflow-x-hidden pt-16 pb-20"
     >
-      <div className={`max-w-screen-sm mx-auto px-2 transition-opacity duration-300 ${
-        isTransitioning ? 'opacity-0' : 'opacity-100'
-      }`}>
+      <div className={`max-w-screen-sm mx-auto px-2 transition-opacity duration-300 ${isTransitioning ? 'opacity-0' : 'opacity-100'
+        }`}>
         {renderSection()}
       </div>
-      
+
       <MobileFooter />
     </div>
   );

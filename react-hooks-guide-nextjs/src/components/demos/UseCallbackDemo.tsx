@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { Button, Card, DemoContainer } from '@/components/common';
 import { useCounter } from '@/hooks';
 
