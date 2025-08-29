@@ -16,7 +16,7 @@ export const TouchOptimizedDemo: React.FC<TouchDemoProps> = React.memo(({
   const [gesture, setGesture] = useState<string>('아직 제스처가 없습니다');
   const [swipeDirection, setSwipeDirection] = useState<string>('스와이프 해보세요');
   const [scale, setScale] = useState<number>(1);
-  const [position, setPosition] = useState({ x: 50, y: 50 });
+  const [position, setPosition] = useState({ x: 100, y: 80 });
   const [isDragging, setIsDragging] = useState(false);
   const [isPressed, setIsPressed] = useState(false);
   
@@ -34,12 +34,19 @@ export const TouchOptimizedDemo: React.FC<TouchDemoProps> = React.memo(({
     if (!container) return;
 
     let isDraggingLocal = false;
+    const startOffset = { x: 0, y: 0 };
+    const currentPos = { x: position.x, y: position.y };
 
     const handleStart = (clientX: number, clientY: number) => {
       isDraggingLocal = true;
       const rect = container.getBoundingClientRect();
-      touchStartRef.current.x = clientX - rect.left;
-      touchStartRef.current.y = clientY - rect.top;
+      const mouseX = clientX - rect.left;
+      const mouseY = clientY - rect.top;
+      
+      // 현재 요소 위치와 마우스 위치의 오프셋 계산
+      startOffset.x = mouseX - currentPos.x;
+      startOffset.y = mouseY - currentPos.y;
+      
       setIsDragging(true);
     };
 
@@ -47,14 +54,21 @@ export const TouchOptimizedDemo: React.FC<TouchDemoProps> = React.memo(({
       if (!isDraggingLocal) return;
       
       const rect = container.getBoundingClientRect();
-      const x = clientX - rect.left;
-      const y = clientY - rect.top;
+      const mouseX = clientX - rect.left;
+      const mouseY = clientY - rect.top;
       
-      // 컨테이너 내부로 제한
-      const newX = Math.max(32, Math.min(rect.width - 32, x));
-      const newY = Math.max(32, Math.min(rect.height - 32, y));
+      // 오프셋을 고려한 새 위치 계산
+      const newX = mouseX - startOffset.x;
+      const newY = mouseY - startOffset.y;
       
-      setPosition({ x: newX, y: newY });
+      // 컨테이너 내부로 제한 (원의 반지름 32px 고려)
+      const clampedX = Math.max(32, Math.min(rect.width - 32, newX));
+      const clampedY = Math.max(32, Math.min(rect.height - 32, newY));
+      
+      currentPos.x = clampedX;
+      currentPos.y = clampedY;
+      
+      setPosition({ x: clampedX, y: clampedY });
     };
 
     const handleEnd = () => {
@@ -118,7 +132,8 @@ export const TouchOptimizedDemo: React.FC<TouchDemoProps> = React.memo(({
       document.removeEventListener('touchmove', handleTouchMove);
       document.removeEventListener('touchend', handleTouchEnd);
     };
-  }, [demoType, position.x, position.y]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [demoType]); // position 의도적으로 제외 - 드래그 성능 최적화
 
   // 다른 제스처 처리
   useEffect(() => {
@@ -369,5 +384,4 @@ export const TouchOptimizedDemo: React.FC<TouchDemoProps> = React.memo(({
   );
 });
 
-TouchOptimizedDemo.displayName = 'TouchOptimizedDemo';
 TouchOptimizedDemo.displayName = 'TouchOptimizedDemo';
