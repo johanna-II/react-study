@@ -83,9 +83,6 @@ const MobileHooksGuideComponent: React.FC = () => {
     <div className="space-y-6">
       {/* 탭 네비게이션 - 모바일 최적화 */}
       <div className="relative">
-        {/* 스크롤 가능 표시 */}
-        <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-slate-900 to-transparent pointer-events-none z-10" />
-        
         <div ref={tabsContainerRef} className="flex overflow-x-auto gap-2 pb-2 scrollbar-hide -mx-4 px-4">
           {MOBILE_HOOKS_DATA.map((hook, index) => (
             <button

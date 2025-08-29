@@ -184,21 +184,8 @@ export const TouchOptimizedDemo: React.FC<TouchDemoProps> = React.memo(({
         );
         
         if (touchStartRef.current.distance) {
-          const rawScaleChange = distance / touchStartRef.current.distance;
-          // 감도를 낮추기 위해 변화량을 감쇠시킴 (0.3 = 30% 감도)
-          const dampingFactor = 0.3;
-          const scaleChange = 1 + (rawScaleChange - 1) * dampingFactor;
-          
-          // 부드러운 스케일링을 위해 현재 스케일과 새 스케일을 보간
-          setScale(prev => {
-            const newScale = prev * scaleChange;
-            const clampedScale = Math.max(0.5, Math.min(3, newScale));
-            // 이전 값과 새 값을 부드럽게 전환 (0.8 = 80% 새 값, 20% 이전 값)
-            return prev * 0.2 + clampedScale * 0.8;
-          });
-          
-          // 다음 프레임을 위해 distance 업데이트
-          touchStartRef.current.distance = distance;
+          const scaleChange = distance / touchStartRef.current.distance;
+          setScale(prev => Math.max(0.5, Math.min(3, prev * scaleChange)));
         }
       }
     };
